@@ -149,7 +149,7 @@ public class FileSource implements DataSource {
 						//System.out.println(strLines);
 
 						CrontabEntryBean entry = cp.marshall(strLines);
-
+						entry.setId(listOfBeans.size());
 						cp.parseToken("*", bYears, false);
 						entry.setBYears(bYears);
 						entry.setYears("*");

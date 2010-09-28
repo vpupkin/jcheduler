@@ -111,19 +111,15 @@ public class CrontabServletXML extends HttpServlet {
 			request.setAttribute("error", errors);
 			show(request, response);
 		} else {
-			String[] idToDelete = request.getParameterValues("remove");
+			String[] idToDelete = request.getParameterValues("event"+"");
 			CrontabEntryBean result[] = new CrontabEntryBean[idToDelete.length];
-			for (int i = 0; i < idToDelete.length ; i++) {
-				CrontabEntryBean resulti = new CrontabEntryBean();
-				resulti.setId(Integer.parseInt(idToDelete[i]));
+			CrontabEntryDAO daoTmp = CrontabEntryDAO.getInstance();
 			try {
-				result[i] =  CrontabEntryDAO.getInstance().find(resulti); 
-			} catch (Exception e) {
-				Log.error(e.toString(), e);
-			}
-			}
-			try {
-			CrontabEntryDAO.getInstance().remove(result);
+				for (int i = 0; i < idToDelete.length ; i++) {
+					CrontabEntryBean resulti =daoTmp.getById(Integer.parseInt(idToDelete[i]));  
+					result[i] =  resulti;				 
+				} 
+				daoTmp.remove(result);
 			} catch (Exception e){
 				errors.add(e.toString());
 				request.setAttribute("error", errors);

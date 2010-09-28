@@ -461,9 +461,9 @@ public class CrontabEntryBean implements Serializable {
      */
 	
 	private boolean equalCrontabEntryBean(CrontabEntryBean ceb) {
-//		if (this.id != ceb.getId()) {
-//			return false;
-//		}
+ 		if (this.id != ceb.getId()) {
+ 			return false;
+ 		}
 		if (!this.getSeconds().equals(ceb.getSeconds())) {
 			return false;
 		}

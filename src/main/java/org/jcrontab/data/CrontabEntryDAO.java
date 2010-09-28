@@ -108,4 +108,7 @@ public class CrontabEntryDAO {
 	public void remove(CrontabEntryBean[] list) throws Exception {
 		dao.remove(list);
 	}
+	public CrontabEntryBean getById(int indexPar) throws Exception {
+		return findAll()[indexPar];
+	}
 }
