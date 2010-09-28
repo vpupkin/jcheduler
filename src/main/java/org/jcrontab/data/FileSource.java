@@ -58,7 +58,7 @@ public class FileSource implements DataSource {
 	private String crontab_file = "crontab";
     
     /** 
-	* Creates new FileSource 
+	* Creates new FileSource  
 	*/
 	
     protected FileSource() {
@@ -98,12 +98,12 @@ public class FileSource implements DataSource {
 		throw new DataNotFoundException("Unable to find :" + ceb);
     }
 
-	protected InputStream createCrontabStream(String name)
+	protected synchronized InputStream createCrontabStream(String name)
 		throws IOException {
 		return new FileInputStream(name);
 	}
 
-	protected boolean isChanged(String name) {
+	protected synchronized boolean isChanged(String name) {
             // Don't like those three lines. But are the only way i have to grant
             // It works in any O.S.
 		final File filez = new File(name);
@@ -190,7 +190,7 @@ public class FileSource implements DataSource {
  * @return
  * @throws IOException
  */
-private Vector readAll(String filename) throws IOException {
+private synchronized Vector readAll(String filename) throws IOException {
 	Vector listOfLines = new Vector();
 	// open the file
 	final InputStream fis = createCrontabStream(filename);
@@ -215,28 +215,32 @@ private Vector readAll(String filename) throws IOException {
 	 */
 	 
     public synchronized void remove(CrontabEntryBean[] ceb) throws Exception {
-	
-        CrontabEntryBean[] thelist = findAll();
-	    CrontabEntryBean[] result = new CrontabEntryBean[thelist.length - ceb.length];
-	    
-	    for (int i = 0; i < thelist.length ; i++) {
-		    if (thelist[i] != null ) thelist[i].setId(-1);
-		    for (int y = 0; y < ceb.length ; y++) {
-		    	   ceb[y].setId(-1);
-			    if (thelist[i] != null && thelist[i].equals(ceb[y])) {
-				    thelist[i] = null;
-			    } 
-		    } 
-	    }
-	    
-	    int resultCounter = 0;
-	    for (int i = 0; i < thelist.length ; i++) {
-		    if(thelist[i] != null) {
-			result[resultCounter] = thelist[i];
-			resultCounter++;
-	        }
-	    }
-            storeAll(result);
+
+		CrontabEntryBean[] thelist = findAll();
+		CrontabEntryBean[] result = new CrontabEntryBean[thelist.length
+				- ceb.length];
+
+		for (int i = 0; i < thelist.length; i++) {
+			if (thelist[i] != null)
+				thelist[i].setId(-1);
+			for (int y = 0; y < ceb.length; y++) {
+				if (ceb[y]!=null){
+					ceb[y].setId(-1);
+					if (thelist[i] != null && thelist[i].equals(ceb[y])) {
+						thelist[i] = null;
+					}
+				}
+			}
+		}
+
+		int resultCounter = 0;
+		for (int i = 0; i < thelist.length; i++) {
+			if (thelist[i] != null) {
+				result[resultCounter] = thelist[i];
+				resultCounter++;
+			}
+		}
+		storeAll(result);
 	}
     
 	/**
@@ -262,6 +266,8 @@ private Vector readAll(String filename) throws IOException {
 			}
             }
 	    out.println("#");
+	    out.flush();
+	    out.close();
 	}
 	/**
 	 *  This method saves the CrontabEntryBean array the actual problem with this

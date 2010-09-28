@@ -49,41 +49,47 @@ public class SimpleTest extends TestCase {
 	super(name);
     }
 
-	
-
     protected void setUp() throws Exception {
         /**/
-        crontab = Crontab.getInstance();
-        
-       Properties props = new Properties();
-        
+         crontab = Crontab.getInstance();
+         
+        Properties props = new Properties();
+         
 		 
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream("jcrontab.test.properties");
 		Reader inStream = new InputStreamReader(in );
 		props.load(inStream );
 		crontab.init(props);
+         
+        ceb[0] = cp.marshall("* * * * * org.jcrontab.tests.test testing");
+        ceb[0].setYears("*");
+        ceb[0].setSeconds("0");
+        ceb[0].setBusinessDays(true);
+        ceb[0].setId(0);
         
-//        ceb[0] = cp.marshall("* * * * * org.jcrontab.tests.test testing");
-//        ceb[0].setYears("*");
-//        ceb[0].setSeconds("0");
-//        ceb[0].setBusinessDays(true);
-//        ceb[0].setId(0);
-//        
-//        ceb[1] = cp.marshall("* * * * * org.jcrontab.tests.test testing 2");
-//        ceb[1].setYears("*");
-//        ceb[1].setSeconds("0");
-//        ceb[1].setBusinessDays(true);
-//        ceb[1].setId(1);
-//        
-//        ceb[2] = cp.marshall("* * * * * org.jcrontab.tests.test testing 3");
-//        ceb[2].setYears("*");
-//        ceb[2].setSeconds("0");
-//        ceb[2].setBusinessDays(true);
-//        ceb[2].setId(2);
-	 
+        ceb[1] = cp.marshall("* * * * * org.jcrontab.tests.test testing 2");
+        ceb[1].setYears("*");
+        ceb[1].setSeconds("0");
+        ceb[1].setBusinessDays(true);
+        ceb[1].setId(1);
+        
+        ceb[2] = cp.marshall("* * * * * org.jcrontab.tests.test testing 3");
+        ceb[2].setYears("*");
+        ceb[2].setSeconds("0");
+        ceb[2].setBusinessDays(true);
+        ceb[2].setId(2);
+        // clear all
+        //CrontabEntryBean[] findAll = CrontabEntryDAO.getInstance().findAll();
+		//CrontabEntryDAO.getInstance().remove(findAll);
+        // init 3 tasks
+        CrontabEntryDAO.getInstance().store(ceb);
+        
 	}
 
 
+    
+    
+    
     public static Test suite() {
 		return new TestSuite(SimpleTest.class);
 
@@ -104,7 +110,7 @@ public class SimpleTest extends TestCase {
 
     public void testDAOFindAll() throws Exception {
         CrontabEntryBean[] listOfBeans= CrontabEntryDAO.getInstance().findAll();
-        assertEquals(listOfBeans.length, 12);
+        assertEquals(listOfBeans.length, 3);
 	}
     
 
@@ -124,4 +130,11 @@ public class SimpleTest extends TestCase {
                            " * * * * * org.jcrontab.tests.TaskTest \n" + 
                            ceb.toXML());
     }
+
+	protected void tearDown() throws Exception {
+        // clear all
+        CrontabEntryBean[] findAll = CrontabEntryDAO.getInstance().findAll();
+		CrontabEntryDAO.getInstance().remove(findAll);		
+		//this.setUp();
+	}
 }

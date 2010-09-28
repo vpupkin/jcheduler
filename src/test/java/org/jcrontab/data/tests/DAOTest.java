@@ -86,7 +86,12 @@ public class DAOTest extends TestCase {
         CrontabEntryDAO.getInstance().store(ceb);
         
 	}
-	
+	protected void tearDown() throws Exception {
+        // clear all
+        CrontabEntryBean[] findAll = CrontabEntryDAO.getInstance().findAll();
+		CrontabEntryDAO.getInstance().remove(findAll);		
+		//this.setUp();
+	}	
     
     public static Test suite() {
 		return new TestSuite(DAOTest.class);
@@ -120,7 +125,7 @@ public class DAOTest extends TestCase {
     
     public void testFindAll() throws Exception {
         CrontabEntryBean[] ceb2 = CrontabEntryDAO.getInstance().findAll();
-        assertEquals(ceb2.length, 30);
+        assertEquals(ceb2.length, 3);
     }
     /**
     public void testRemove()  throws Exception {
@@ -137,7 +142,7 @@ public class DAOTest extends TestCase {
 	     CrontabEntryBean[] ceb2 = {ceb[2]};
          CrontabEntryDAO.getInstance().remove(ceb2);
          CrontabEntryBean[] ceb3 = CrontabEntryDAO.getInstance().findAll();
-         assertEquals(ceb3.length, 25);
+         assertEquals(ceb3.length, 2);
     }
 
     public void testRemove2()  throws Exception {
