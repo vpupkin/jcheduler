@@ -42,22 +42,25 @@ public class DataFactory {
     private static DataFactory instance;
     
     private static DataSource dao = null;
-	
-	/**
-	 *	Default Constructor private
-	 */
-    private DataFactory() {
-	   if ( dao == null) {
+    static { 
 		try {
 			Crontab instance2 = Crontab.getInstance();
-			String className = instance2.getProperty("org.jcrontab.data.datasource");
+			String className = instance2
+					.getProperty("org.jcrontab.data.datasource");
 			Class classTmp = Class.forName(className);
-			dao = ((DataSource)classTmp .newInstance()) .getInstance();
+			dao = ((DataSource) classTmp.newInstance()).getInstance();
 		} catch (Exception e) {
-		    Log.error(e.toString(), e);
+			Log.error(e.toString(), e);
 		}
-	   }
-    }
+
+	}
+	
+	/**
+	 * Default Constructor private
+	 */
+    private DataFactory() {
+
+	}
     /** 
 	 * This method returns the DataFactory of the System This method
 	 * grants the Singleton pattern

@@ -57,7 +57,7 @@ public class Crontab {
 										"jcrontab.properties";
 	private boolean isInternalConfig = true;
     /** The only instance of this cache */
-    private static Crontab singleton = null;
+    private static Crontab singleton = new Crontab();
     
     /**
      * Crontab constructor
@@ -76,10 +76,7 @@ public class Crontab {
      *  Change the private constructor to public.
      *  @return singleton the only instance of this class
      */
-    public static synchronized Crontab getInstance(){
-			if (singleton == null){
-				singleton = new Crontab();
-			}
+    public static synchronized Crontab getInstance(){ 
 			return singleton;
     }
     

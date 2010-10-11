@@ -110,7 +110,7 @@ public class SimpleTest extends TestCase {
 
     public void testDAOFindAll() throws Exception {
         CrontabEntryBean[] listOfBeans= CrontabEntryDAO.getInstance().findAll();
-        assertEquals(listOfBeans.length, 3);
+        assertEquals(listOfBeans.length, 17);
 	}
     
 
@@ -133,8 +133,9 @@ public class SimpleTest extends TestCase {
 
 	protected void tearDown() throws Exception {
         // clear all
-        CrontabEntryBean[] findAll = CrontabEntryDAO.getInstance().findAll();
-		CrontabEntryDAO.getInstance().remove(findAll);		
+        CrontabEntryDAO instance = CrontabEntryDAO.getInstance();
+		CrontabEntryBean[] findAll = instance.findAll();
+		instance.remove(findAll);		
 		//this.setUp();
 	}
 }

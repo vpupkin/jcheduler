@@ -40,32 +40,24 @@ public class CrontabEntryDAO {
 	 *This insntance grants only an instance of this DAO in
 	 * every system 
 	 */
-	private static CrontabEntryDAO instance;
+	private static CrontabEntryDAO instance = new CrontabEntryDAO();
 
 	/** This DataSource is the reason of this class */
-	private static DataSource dao = null;
+	private static DataSource dao = DataFactory.getDAO();
+ 
 	
 	/**
-	 * Default constructor This one initializes everything maybe 
-	 * could use lazy inizialization
+	 * Default constructor This one initializes everything maybe could use lazy
+	 * inizialization
 	 */
 	private CrontabEntryDAO() {
-		   if ( dao == null) {
-				try {
-				dao = DataFactory.getInstance().getDAO();
-				} catch (Exception e) {
-					Log.error(e.toString(), e);
-				}
-		   }
+
 	}	
     /**
-	 *	This method returns the singleton is very important to grant
-	 *  That only a Thread accesses at a time
+	 * This method returns the singleton is very important to grant That only a
+	 * Thread accesses at a time
 	 */
-	public synchronized static CrontabEntryDAO getInstance() {
-		if (instance == null) {
-            instance = new CrontabEntryDAO();
-		}
+	public synchronized static CrontabEntryDAO getInstance() { 
 		return instance;
 	}
 	/**

@@ -70,6 +70,8 @@ public class CrontabEntryBean implements Serializable {
     private boolean[] bDaysOfWeek;
     private boolean[] bDaysOfMonth;
     private boolean[] bYears;
+
+	private String header = "";
         
 	/** Id setter
 	 * @param id this integer identifies the CrontabEntryBean
@@ -364,7 +366,7 @@ public class CrontabEntryBean implements Serializable {
 	public String toString(){
         try {
             CrontabParser cp = new CrontabParser();
-        	return cp.unmarshall(this);
+        	return cp.unmarshall(this).trim();
         } catch (Exception e) {
             return e.toString();
         }
@@ -384,6 +386,8 @@ public class CrontabEntryBean implements Serializable {
     * @param pw The printWritter to write the XML
     */        
 	public void toXML(PrintWriter pw) {
+		
+		pw.println("<!--  "+  this.header + "\n -->");
 		pw.println("<crontabentry id=\""+ id + "\">");
         pw.println("<seconds>" + seconds + "</seconds> ");
 		pw.println("<minutes>" + minutes + "</minutes> ");
@@ -461,9 +465,9 @@ public class CrontabEntryBean implements Serializable {
      */
 	
 	private boolean equalCrontabEntryBean(CrontabEntryBean ceb) {
- 		if (this.id != ceb.getId()) {
- 			return false;
- 		}
+// 		if (this.id != ceb.getId()) {
+// 			return false;
+// 		}
 		if (!this.getSeconds().equals(ceb.getSeconds())) {
 			return false;
 		}
@@ -504,5 +508,19 @@ public class CrontabEntryBean implements Serializable {
 			}
 		}
 		return true;
+	}
+	public void setHeader(StringBuffer sb) {
+		this.header = sb.toString();
+	}
+	public String getHeader() { 
+			return header;
+	}
+	public void setHeader(String header) {
+		this.header = header;
+	}
+	@Override
+	public int hashCode() {
+		return 
+			this.toString().hashCode();
 	}
 }

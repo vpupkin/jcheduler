@@ -88,22 +88,24 @@ public class CalendarBuilder  {
 		Calendar after = Calendar.getInstance();
         after.setTime(afterDate);
 
-		int second = getNextIndex(ceb.getBSeconds(), after.get(Calendar.SECOND));
+		boolean[] seconds = ceb.getBSeconds();
+		int afterSeconds = after.get(Calendar.SECOND);
+		int second = getNextIndex(seconds, afterSeconds);
         if (second == -1) {
-            second = getNextIndex(ceb.getBSeconds(), 0);
+            second = getNextIndex(seconds, 0);
             after.add(Calendar.MINUTE, 1);
         }
 		
         int minute = getNextIndex(ceb.getBMinutes(), after.get(Calendar.MINUTE));
         if (minute == -1) {
-			second = getNextIndex(ceb.getBSeconds(), 0);
+			second = getNextIndex(seconds, 0);
             minute = getNextIndex(ceb.getBMinutes(), 0);
             after.add(Calendar.HOUR_OF_DAY, 1);
         }
 
         int hour = getNextIndex(ceb.getBHours(), after.get(Calendar.HOUR_OF_DAY));
         if (hour == -1) {
-			second = getNextIndex(ceb.getBSeconds(), 0);
+			second = getNextIndex(seconds, 0);
             minute = getNextIndex(ceb.getBMinutes(), 0);
             hour = getNextIndex(ceb.getBHours(), 0);
             after.add(Calendar.DAY_OF_MONTH, 1);
@@ -113,7 +115,7 @@ public class CalendarBuilder  {
         
         
         if (dayOfMonth == -1) {
-			second = getNextIndex(ceb.getBSeconds(), 0);
+			second = getNextIndex(seconds, 0);
             minute = getNextIndex(ceb.getBMinutes(), 0);
             hour = getNextIndex(ceb.getBHours(), 0);
             dayOfMonth = getNextIndex(ceb.getBDaysOfMonth(), 0);
@@ -132,7 +134,7 @@ public class CalendarBuilder  {
         
         int month = getNextIndex(ceb.getBMonths(), after.get(Calendar.MONTH));
         if (month == -1) {
-			second = getNextIndex(ceb.getBSeconds(), 0);
+			second = getNextIndex(seconds, 0);
             minute = getNextIndex(ceb.getBMinutes(), 0);
             hour = getNextIndex(ceb.getBHours(), 0);
             dayOfMonth = getNextIndex(ceb.getBDaysOfMonth(), 0);
