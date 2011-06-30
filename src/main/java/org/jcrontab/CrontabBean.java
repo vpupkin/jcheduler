@@ -259,6 +259,7 @@ import org.jcrontab.log.Log;
 		 
 	}
 	public void setLastResult(int taskId) {
+		execCount++;
 		lastResult = taskId;
 	}
 }
