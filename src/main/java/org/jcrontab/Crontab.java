@@ -330,7 +330,7 @@ public class Crontab {
             cl = (Class)(loadedClasses.get(bean.className));
             
             // Creates the new task
-            newTask = new CronTask();
+            newTask = new CronTask(bean);
             newTask.setParams(this, iTaskID, bean.className, bean.methodName, 
             		bean.extraInfo);
 			// Aded name to newTask to show a name instead of Threads whe 
@@ -361,6 +361,7 @@ public class Crontab {
             return iTaskID;
 
         } catch(Exception e) {
+        	e.printStackTrace();
 			Log.error("Smth was wrong with" + 
 						bean.className + 
 						"#" +

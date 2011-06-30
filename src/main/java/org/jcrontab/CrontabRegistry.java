@@ -39,7 +39,9 @@ public class CrontabRegistry {
 				colBean.setLastResult(taskId);
 				collector.put(key, colBean);
 			}
-		}catch(Throwable e){/* ignore any statistics errors */}
+		}catch(Throwable e){/* ignore any statistics errors */
+			e.printStackTrace();
+		}
 	}
 
 	public static CrontabBean getBean(CrontabEntryBean crontabEntryBean) {
@@ -51,7 +53,9 @@ public class CrontabRegistry {
 			int parsedID = Integer.parseInt( key);
 			crontabEntryBean.setId(parsedID);
 			retval.setId(parsedID);
-		}catch(Throwable e){}
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
 		return retval;
 	}
 

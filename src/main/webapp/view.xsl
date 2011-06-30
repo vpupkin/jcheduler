@@ -107,32 +107,32 @@
 				<input name="remove4" type="hidden" value="${@id}" />
 				<xsl:value-of select="id" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="minutes" />
 			</TD>
 
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="hours" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="daysofmonth" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="months" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="daysofweek" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="beanLastStarted" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="beanLastResult" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="beanExecCount" />
 			</TD>
-			<TD width="6">
+			<TD width="3">
 				<xsl:value-of select="class" />
 				<xsl:if test="method!=''">
 					#

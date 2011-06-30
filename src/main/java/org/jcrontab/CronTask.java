@@ -75,10 +75,17 @@ public class CronTask
      * We always call the constructor with no arguments, because the tasks
      * are created dinamically (by Class.forName).
      * You should call the method setParams inmediatly after creating a new task
+     * 
+     * @deprecated use CronTask(CrontabBean bean) insread
      */
     public CronTask() {
+    	this(new CrontabBean());
     }
-    /**
+    
+    public CronTask(CrontabBean crontabBean) {
+		this.bean = crontabBean;
+	}
+	/**
      * Selects the initial parameters for the task. As a task is created loaded
      * dinamically from the class name, the default constructor called is
      * the one with no arguments. You should call this method after creating
