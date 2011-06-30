@@ -101,10 +101,10 @@
 	<xsl:template match="crontabentry">
 		<TR>
 			<TD width="3">
-				<input name="remove" type="checkbox" value="{../@id}" />
-				<input name="remove2" type="checkbox" value="{@id}" />
-				<input name="remove3" type="checkbox" value="${id}" />
-				<input name="remove4" type="checkbox" value="${@id}" />
+				<input name="remove" type="checkbox" value="{@id}" />
+				<input name="remove1" type="hidden" value="{../@id}" />
+				<input name="remove3" type="hidden" value="${id}" />
+				<input name="remove4" type="hidden" value="${@id}" />
 				<xsl:value-of select="id" />
 			</TD>
 			<TD width="6">

@@ -183,6 +183,7 @@ public class FileSource implements DataSource {
 				int sizeOfBeans = listOfBeans.size();
 				if (sizeOfBeans == 0) {
 					if (THROW_EX_WHEN_EMPTY) throw new DataNotFoundException("No CrontabEntries  available");
+					else cachedBeans = null;
 				} else {
 					CrontabEntryBean[] finalBeans = new CrontabEntryBean[sizeOfBeans];
 					for (int i = 0; i < sizeOfBeans; i++) {
@@ -212,18 +213,23 @@ private synchronized Vector readAll(String filename) throws IOException {
 	synchronized (FileSource.class) {
 		// open the file
 		final InputStream fis = createCrontabStream(filename);
-		BufferedReader input = new BufferedReader(
-				new InputStreamReader(fis));
-	
-		String strLine;
-	
-		while ((strLine = input.readLine()) != null) {
-			//System.out.println(strLine);
-			strLine = strLine.trim();
-			listOfLines.add(strLine);
+		try{
+			BufferedReader input = new BufferedReader(
+					new InputStreamReader(fis));
+		
+			String strLine;
+		
+			while ((strLine = input.readLine()) != null) {
+				//System.out.println(strLine);
+				strLine = strLine.trim();
+				listOfLines.add(strLine);
+			}
+			input.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}finally{
+					if (fis!=null)fis.close();
 		}
-		input.close();
-		fis.close();
 	}
 	return listOfLines;
 }
@@ -291,7 +297,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 		String fileNameTmp = instance2.getProperty(
 				"org.jcrontab.data.file");
 		File fl = new File(fileNameTmp);
-		File lockTmp = new File(fl.getParentFile(),".lock");		
+		File lockTmp = new File(fl.getParentFile(),".lock");	 
 		synchronized (FileSource.class) {
 			if (!lockTmp.exists()){
 				System.out.println("--------"+storeId+"--------------------");
