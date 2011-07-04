@@ -28,9 +28,9 @@ public class CrontabRegistry {
 			synchronized (Cache.class) {
 				if (collector.containsKey(key)) {// update clone
 					colBean = (CrontabBean)collector.get(key);
-					if (colBean==null || crontabBean.equals(colBean)){  // store itself into regisry
+					if (colBean==null ){  // store itself into regisry
 						colBean = crontabBean;					
-					}else{
+					}else if ( crontabBean.equals(colBean)){
 						//colBean.registerLastExecution(taskId);
 					}
 					
@@ -56,7 +56,7 @@ public class CrontabRegistry {
 			crontabEntryBean.setId(parsedID);
 			retval.setId(parsedID);
 		}catch(Throwable e){
-			e.printStackTrace();
+			if (1=="".length()) e.printStackTrace();
 		}
 		return retval;
 	}
@@ -85,6 +85,11 @@ public class CrontabRegistry {
 		String[] aExtraInfo = crontabBean.getExtraInfo();
 		String valTmp = calcVal(className, methodName, aExtraInfo);
 		return ""+valTmp .hashCode(); 
+	}
+
+	public static void registerLastExecutionError(CrontabBean bean, int taskId, Throwable e) {
+		bean.addError(e);
+		registerLastExecution(bean, - taskId);
 	}
 
 }

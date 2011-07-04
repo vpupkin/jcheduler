@@ -44,6 +44,11 @@ import org.jcrontab.log.Log;
 
  public class CrontabBean implements Serializable {
 
+	/**
+	 * @author vipup
+	 */
+	private static final long serialVersionUID = -6414249786393408743L;
+
 	@Override
 	public boolean equals(Object obj) {
 		 if (!(obj instanceof CrontabBean )) return false;
@@ -243,7 +248,7 @@ import org.jcrontab.log.Log;
 	public void registerLastExecution(int taskId) {
 		CrontabRegistry.registerLastExecution(this,taskId);
 		lastExecution  = System.currentTimeMillis();
-		execCount ++;
+		setLastResult(taskId);
 		Log.info( "execId:"+taskId+":"+this);
 	}
 	private int execCount=0;
@@ -253,7 +258,21 @@ import org.jcrontab.log.Log;
 	}
 	
 	// 0  - not user, positiv - succes with taskId, negative - error with taskId
-	long lastResult = 0;
+	private long lastResult = 0;
+	private Throwable error;
+	private Object executionResult;
+	public Object getExecutionResult() { 
+			return executionResult;
+	}
+	public void setExecutionResult(Object executionResult) {
+		this.executionResult = executionResult;
+	}
+	public Throwable getError() { 
+			return error;
+	}
+	public void setError(Throwable error) {
+		this.error = error;
+	}
 	public long getLastResult() {
 		 return lastResult;
 		 
@@ -261,5 +280,11 @@ import org.jcrontab.log.Log;
 	public void setLastResult(int taskId) {
 		execCount++;
 		lastResult = taskId;
+	}
+	public void addError(Throwable e) {
+		setError( e );
+	}
+	public void setResult(Object retval) {
+		setExecutionResult (retval);
 	}
 }

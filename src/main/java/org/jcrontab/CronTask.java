@@ -175,8 +175,7 @@ public class CronTask
 	                            // but?
 	                            runnable = (Runnable)cl.newInstance();
 	                        }
-	                        Thread ex1 = new Thread(this.getThreadGroup(), runnable, "$"+bean.id);
-	                        //runnable.run();
+	                        Thread ex1 = new Thread(this.crontab.threadPool, runnable, "$"+bean.id); 
 	                        ex1 .start();
                     	}
                     }
@@ -191,8 +190,7 @@ public class CronTask
             } else {
                 try {
                     Class[] argTypes = {String[].class};
-                    Object[] arg = {bean.extraInfo};
-
+                    Object[] arg = {bean.extraInfo}; 
                     // lets try with main()
                     try {
                         Method mMethod = cl.getMethod("main", argTypes);
@@ -210,10 +208,8 @@ public class CronTask
                             // Usually this code will never run
                             // but?
                             runnable = (Runnable)cl.newInstance();
-                        }
-
-                        Thread ex1 = new Thread(this.getThreadGroup(), runnable, "$"+bean.id);
-                        //runnable.run();
+                        } 
+                        Thread ex1 = new Thread(this.crontab.threadPool, runnable, "$"+bean.id); 
                         ex1 .start();
                         }
 
@@ -231,6 +227,11 @@ public class CronTask
             }        		
         }
         Log.debug(""+retval);
+        if (retval instanceof Throwable){
+        	bean.setError( (Throwable)retval);
+        }else{
+        	bean.setResult ( retval);
+        }
     }
  
 	/**
@@ -241,19 +242,15 @@ public class CronTask
 
         try { 
             tempFile = preMail(tempFile);
-
             // Runs the task
             runTask();
-
             // Deletes the task from the crontab array
-            crontab.getInstance().deleteTask(identifier);
-            
+            crontab.getInstance().deleteTask(identifier);            
             // Report success execution
             CrontabRegistry.registerLastExecution(this.bean, identifier);
-
             postMail(tempFile);
         } catch (Throwable e) {
-        	CrontabRegistry.registerLastExecution(this.bean, - identifier);
+        	CrontabRegistry.registerLastExecutionError(this.bean, identifier, e);
             Log.error("ERROR@TaskID:"+identifier+":="+e.toString(), e);
         }
     }
@@ -269,8 +266,7 @@ public class CronTask
 	private File preMail(File tempFile) throws IOException,
 			FileNotFoundException {
 		if (Crontab.getInstance().getProperty("org.jcrontab.SendMail.to") != null) {
-		    tempFile = new File(bean.className).createTempFile("jcrontab", 
-		                                                     ".tmp");
+		    tempFile = new File(bean.className).createTempFile("jcrontab",   ".tmp");
 
 		    FileOutputStream fos = new FileOutputStream(tempFile);
 		    PrintStream pstream = new PrintStream(fos);
