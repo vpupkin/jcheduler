@@ -10,6 +10,46 @@
 		<artifactId>oss-parent</artifactId>
 		<version>5</version>
 	</parent>
+	<profiles>
+	
+		<profile>
+			<id>profile-FILECACHE</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>cccache</name>
+				</property>
+			</activation>
+			<properties>
+				<gae.application.version>xxx</gae.application.version>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+
+						<includes>
+							<include>**/*</include>
+						</includes>
+					</resource>
+					<resource>
+						<filtering>true</filtering>
+						<directory>
+							${basedir}/src/main/profiles
+						</directory>
+						<includes>
+							<include>
+								net.sf.jsr107cache.CacheFactory
+							</include>
+						</includes>
+						<targetPath>META-INF/services</targetPath>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
+
+	
 	<distributionManagement>
 		<site>
 			<id>z-os.svn.server</id>
@@ -160,10 +200,15 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId> 
-			<version>0.0.7</version>
+			<version>0.0.5</version>
 		</dependency>				
 		
 		<!-- logging -->
+		<dependency>
+    <groupId>javassist</groupId>
+    <artifactId>javassist</artifactId>
+    <version>3.12.1.GA</version>
+</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -174,25 +219,27 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
 				
-	
+	 	-->
 
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId>
 			<version>0.0.6</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-
+ -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>

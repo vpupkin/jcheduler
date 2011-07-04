@@ -45,7 +45,9 @@ import org.apache.http.params.HttpParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cc.co.llabor.cache.MemoryFileCache;
 import cc.co.llabor.cache.MemoryFileItem;
+import cc.co.llabor.cache.MemoryFileItemFactory;
  
 
 /**
@@ -87,14 +89,22 @@ public class Curl implements Serializable{
 			throws ClientProtocolException, IOException {
 		Curl curlTmp = new Curl();
 		HttpResponse respTmp = curlTmp.get(toFetchStr);
-		System.out.println(respTmp);// s.getAllHeaders()
-		HttpEntity eTmp = ((BasicHttpResponse) respTmp).getEntity();
-		InputStream contentTmp = eTmp.getContent();
-		int sizeTmp = Math.max((int) eTmp.getContentLength(), contentTmp
-				.available());
-		byte buf[] = new byte[sizeTmp];
-		int readedTmp = contentTmp.read(buf);
-		return new String(buf, 0, readedTmp);
+		//1)
+		 
+		HttpEntity eTmp = ((BasicHttpResponse )respTmp).getEntity();
+		MemoryFileItemFactory factory = MemoryFileItemFactory.getInstance();
+		Header ctTmp = eTmp.getContentType();
+		String contentTypeTmp = ctTmp.getValue();
+		String name2Tmp =  "testFetchUrl";
+		// capacity ~ 100 seconds X 1000 requests
+		name2Tmp += (""+System.currentTimeMillis()).substring(8);
+		MemoryFileItem dataTmp = factory.createItem(name2Tmp, contentTypeTmp, false, name2Tmp);
+		eTmp.writeTo(  dataTmp .getOutputStream() );
+		dataTmp.flush();
+		MemoryFileCache cacheTmp = MemoryFileCache.getInstance(Curl.class.getName());
+		String nameTmp = cacheTmp. put( dataTmp  );
+		return nameTmp ;
+		
 	}
 	static void System_out_print(String txt){
 		log.trace(txt);

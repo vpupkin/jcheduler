@@ -32,6 +32,8 @@ public class CrontabRegistry {
 						colBean = crontabBean;					
 					}else if ( crontabBean.equals(colBean)){
 						//colBean.registerLastExecution(taskId);
+						colBean.setError(crontabBean.getError());
+						colBean.setResult(crontabBean.getExecutionResult());
 					}
 					
 				} else { // store itself into regisry
