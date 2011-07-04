@@ -116,6 +116,7 @@ public class Crontab {
 		}
         // Creates the thread Cron, wich generates the engine events         
         cron = new Cron(this, iTimeTableGenerationFrec);
+        
 		isInternalConfig = true;
         cron.setName("Cron");
         cron.setDaemon(daemon);
@@ -307,6 +308,7 @@ public class Crontab {
     	
 		return newTask(beanTmp );
     }
+    
     /**
      * Creates and runs a new task 
      * @param CrontabBean  
@@ -315,9 +317,16 @@ public class Crontab {
      */
     
      public synchronized int newTask(CrontabBean bean) {
-        CronTask newTask;
-        Class cl;
-        int iTaskID;
+    	
+		return newTask(bean, threadPool );
+     }
+     
+     ThreadGroup threadPool = new ThreadGroup("Crontab");
+     
+	public int newTask(CrontabBean bean, ThreadGroup threadGroup) {
+		CronTask newTask;
+		Class cl;
+		int iTaskID;
 
         // Do not run new tasks if it is uninitializing
         if(stoping) {
@@ -330,9 +339,8 @@ public class Crontab {
             cl = (Class)(loadedClasses.get(bean.className));
             
             // Creates the new task
-            newTask = new CronTask(bean);
-            newTask.setParams(this, iTaskID, bean.className, bean.methodName, 
-            		bean.extraInfo);
+            newTask = new CronTask(this, threadGroup, iTaskID, bean);
+             
 			// Aded name to newTask to show a name instead of Threads whe 
             // logging
             // Thanks to Sander Verbruggen 
@@ -348,6 +356,7 @@ public class Crontab {
             }
             // Starts the task execution
             newTask.setName("Crontask-"+iTaskID);
+            
             newTask.start();
 
 			if (bean.extraInfo!=null && bean.extraInfo.length > 0) { 
@@ -423,4 +432,6 @@ public class Crontab {
             this.task = task;
         }
     }
+
+
 }

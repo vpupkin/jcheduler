@@ -181,7 +181,7 @@ import org.jcrontab.log.Log;
                 sb.append("\n [ ClassName: " + className  + " ]");
 		sb.append("\n [ MethodName : " + methodName  + " ]");
 		if (bextraInfo) {
-			for (int i = 0; i < extraInfo.length ; i++) {
+			for (int i = 0;extraInfo!=null&& i < extraInfo.length ; i++) {
 			sb.append("\n [ Parameter " + i + " : " + extraInfo[i] 
                             + " ]"); 
 			}

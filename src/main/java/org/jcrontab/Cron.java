@@ -203,7 +203,7 @@ startMEM +="      _|                                                            
             else {
                 String methodName = nextEv.getMethodName();
 				String[] extraInfo = nextEv.getExtraInfo();
-				int taskId = crontab.newTask( nextEv);
+				int taskId = crontab.newTask( nextEv, crontab.threadPool);
 				nextEv.registerLastExecution(taskId);
             }
         }

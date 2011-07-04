@@ -55,7 +55,7 @@ public class CronTask
 //    public String strMethodName;
 //    public String[] strParams;
     private CrontabBean bean;
-    private static Runnable runnable = null;
+//    private static Runnable runnable = null;
 
     /**
      * Constructor of a task.
@@ -82,7 +82,13 @@ public class CronTask
     	this(new CrontabBean());
     }
     
-    public CronTask(CrontabBean crontabBean) {
+    public CronTask(CrontabBean crontabBean) { 
+		this.bean = crontabBean;
+	}
+	public CronTask(Crontab crontabPar, ThreadGroup threadGroup, int iTaskID, CrontabBean crontabBean) {
+		super(threadGroup, ""+crontabBean.getId()); 
+		this.crontab= crontabPar;
+		this.identifier = iTaskID;
 		this.bean = crontabBean;
 	}
 	/**
@@ -157,7 +163,9 @@ public class CronTask
                     	} catch (NoSuchMethodException e1) {
                     		retval  = e1;
 	                        // If its not a method meaybe is a Constructor
+                    		Runnable runnable = null;
 	                        try {
+	                            
 	                            Constructor con = cl.getConstructor(argTypes);
 	                            runnable = (Runnable)con.newInstance(arg);
 	                        } catch (NoSuchMethodException e2) {
@@ -167,8 +175,9 @@ public class CronTask
 	                            // but?
 	                            runnable = (Runnable)cl.newInstance();
 	                        }
-	
-	                        runnable.run();
+	                        Thread ex1 = new Thread(this.getThreadGroup(), runnable, "$"+bean.id);
+	                        //runnable.run();
+	                        ex1 .start();
                     	}
                     }
 
@@ -189,6 +198,7 @@ public class CronTask
                         Method mMethod = cl.getMethod("main", argTypes);
                         retval   = mMethod.invoke(null, arg);
                     } catch (NoSuchMethodException et) {
+                    	Runnable runnable = null;
                         try {
                         	retval   = et;
                             // If its not a method meaybe is a Constructor
@@ -202,8 +212,10 @@ public class CronTask
                             runnable = (Runnable)cl.newInstance();
                         }
 
-                        runnable.run();
-                    }
+                        Thread ex1 = new Thread(this.getThreadGroup(), runnable, "$"+bean.id);
+                        //runnable.run();
+                        ex1 .start();
+                        }
 
                 } catch (Exception e) {
                 	retval   = e;
