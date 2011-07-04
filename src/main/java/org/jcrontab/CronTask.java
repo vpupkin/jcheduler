@@ -132,7 +132,7 @@ public class CronTask
      * This method decides wich method call in  the given class
      */
     public void runTask() {
-    
+    	Object retval = null;
         try {
             // Do class instantiation first (common to all cases of 'if' below)
             Class cl = CronTask.class.getClassLoader().loadClass(bean.className);
@@ -146,26 +146,35 @@ public class CronTask
                     // accessing the given method
                     try {
                         Method mMethod = cl.getMethod(bean.methodName, argTypes);
-                        mMethod.invoke(null, arg);
+                        retval = mMethod.invoke(null, arg);
                     } catch (NoSuchMethodException e) {
-
-                        // If its not a method meaybe is a Constructor
-                        try {
-                            Constructor con = cl.getConstructor(argTypes);
-                            runnable = (Runnable)con.newInstance(arg);
-                        } catch (NoSuchMethodException e2) {
-
-                            // Well maybe its not a method neither a constructor
-                            // Usually this code will never run
-                            // but?
-                            runnable = (Runnable)cl.newInstance();
-                        }
-
-                        runnable.run();
+                    	retval  = e;
+                    	// access to method public static methodName(String arg)
+                    	try{
+                    		Method mMethod = cl.getMethod( bean.methodName, new Class[]{"".getClass()} );
+                    		String strArr[] = (String[])arg[0];
+                    		retval = mMethod.invoke(null, new Object[]{strArr[0]});
+                    	} catch (NoSuchMethodException e1) {
+                    		retval  = e1;
+	                        // If its not a method meaybe is a Constructor
+	                        try {
+	                            Constructor con = cl.getConstructor(argTypes);
+	                            runnable = (Runnable)con.newInstance(arg);
+	                        } catch (NoSuchMethodException e2) {
+	                        	retval  = e2;
+	                            // Well maybe its not a method neither a constructor
+	                            // Usually this code will never run
+	                            // but?
+	                            runnable = (Runnable)cl.newInstance();
+	                        }
+	
+	                        runnable.run();
+                    	}
                     }
 
                     // let's catch Throwable its more generic
                 } catch (Exception e) {
+                	retval = e;
                     Log.error(e.toString(), e);
                 }
 
@@ -178,15 +187,15 @@ public class CronTask
                     // lets try with main()
                     try {
                         Method mMethod = cl.getMethod("main", argTypes);
-                        mMethod.invoke(null, arg);
+                        retval   = mMethod.invoke(null, arg);
                     } catch (NoSuchMethodException et) {
                         try {
-
+                        	retval   = et;
                             // If its not a method meaybe is a Constructor
                             Constructor con = cl.getConstructor(argTypes);
                             runnable = (Runnable)con.newInstance(arg);
                         } catch (NoSuchMethodException e2) {
-
+                        	retval   = e2;
                             // Well maybe its not a method neither a constructor
                             // Usually this code will never run
                             // but?
@@ -197,16 +206,19 @@ public class CronTask
                     }
 
                 } catch (Exception e) {
+                	retval   = e;
                     Log.error(e.toString(), e);
                 }
             }
         } catch (Exception e) {
+        	retval   = e;
         	if (bean.methodName != null && bean.methodName.length() > 0) {
         		EJBLookup.tryEjb(bean.className, bean.methodName, bean.extraInfo);
             } else { 
                 Log.error("Unable to instantiate class: " + bean.className, e) ; 
             }        		
         }
+        Log.debug(""+retval);
     }
  
 	/**

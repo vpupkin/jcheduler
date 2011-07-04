@@ -28,15 +28,17 @@ public class CrontabRegistry {
 			synchronized (Cache.class) {
 				if (collector.containsKey(key)) {// update clone
 					colBean = (CrontabBean)collector.get(key);
-					if (colBean!=null && !crontabBean.equals(colBean)){ // avoid call itself,  check for "impossible" null is theMUST!!!
-						colBean.registerLastExecution(taskId);
-					}else { // store itself into regisry
+					if (colBean==null || crontabBean.equals(colBean)){  // store itself into regisry
 						colBean = crontabBean;					
+					}else{
+						//colBean.registerLastExecution(taskId);
 					}
+					
 				} else { // store itself into regisry
 					colBean = crontabBean;				
 				}
 				colBean.setLastResult(taskId);
+				
 				collector.put(key, colBean);
 			}
 		}catch(Throwable e){/* ignore any statistics errors */

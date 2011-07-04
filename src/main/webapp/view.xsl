@@ -39,9 +39,9 @@
 						<TD>
 							<a href="help.html#daysOfWeek">Days of week</a>
 						</TD>
-						<TD>timestamp</TD>
-						<TD>retval</TD>
-						<TD>count</TD>
+						<TD>last started</TD>
+						<TD>execID</TD>
+						<TD>callcount</TD>
 						<TD>
 							<a href="help.html#class">Classname#Methodname</a>
 						</TD>
@@ -66,22 +66,22 @@
 							<TD width="3">
 								<input type="checkbox" name=""></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Minutes" value="*"></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Hours" value="*"></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Daysofmonth" value="*"></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Month" value="*"></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Daysofweek" value="*"></input>
 							</TD>
-							<TD width="6">
+							<TD>
 								<input type="text" name="Classname"></input>
 							</TD>
 							<TD>
@@ -107,32 +107,32 @@
 				<input name="remove4" type="hidden" value="${@id}" />
 				<xsl:value-of select="id" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="minutes" />
 			</TD>
 
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="hours" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="daysofmonth" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="months" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="daysofweek" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="beanLastStarted" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="beanLastResult" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="beanExecCount" />
 			</TD>
-			<TD width="3">
+			<TD >
 				<xsl:value-of select="class" />
 				<xsl:if test="method!=''">
 					#
