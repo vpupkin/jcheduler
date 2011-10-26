@@ -6,3 +6,6 @@ syntax: glob
 .svn
 .settings
 .filecache
+
+syntax: regexp
+^release\.properties$
