@@ -61,13 +61,13 @@
 	<scm>
 
 		<connection>
-			scm:svn:http://jcrontab.svn.sourceforge.net/svnroot/jcrontab/
+			sscm:hg:https://code.google.com/p/jcheduler/
 		</connection>
 		<developerConnection>
-			scm:svn:https://jcrontab.svn.sourceforge.net/svnroot/jcrontab/
+			scm:hg:https://code.google.com/p/jcheduler/
 		</developerConnection>
 		<url>
-			scm:svn:http://jcrontab.svn.sourceforge.net/svnroot/jcrontab/
+			sscm:hg:https://code.google.com/p/jcheduler/
 		</url>
 	</scm>
 	<!-- AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: <repositories></repositories> 
