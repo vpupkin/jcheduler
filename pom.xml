@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sf.jcrontab</groupId>
 	<artifactId>jcrontab</artifactId>
@@ -121,21 +122,6 @@
 	<build>
 		<extensions>
 			<!-- http://code.google.com/p/maven-googlecode-plugin/wiki/MavenSiteDeployOnSVN -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-scm</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-			<extension>
-				<groupId>org.apache.maven.scm</groupId>
-				<artifactId>maven-scm-manager-plexus</artifactId>
-				<version>1.0</version>
-			</extension>
-			<extension>
-				<groupId>org.apache.maven.scm</groupId>
-				<artifactId>maven-scm-provider-svnexe</artifactId>
-				<version>1.0</version>
-			</extension>
 			<extension> 
 				<groupId>org.apache.maven.wagon</groupId> 
 				<artifactId>wagon-webdav</artifactId> 
@@ -145,7 +131,7 @@
                 <groupId>org.jvnet.wagon-svn</groupId>
                 <artifactId>wagon-svn</artifactId>
                 <version>1.8</version>
-            </extension>			
+            </extension>		
 		</extensions>
 		<plugins>
 			<!-- TODO enable to start it from comman-line org.jcrontab.Jcrontab -->
