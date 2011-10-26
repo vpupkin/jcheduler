@@ -28,13 +28,12 @@ package org.jcrontab;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.IOException; 
 import org.jcrontab.log.Log;
 
 /**
  *	This class is the one that captures the output from the 
- *  native progam and writes it to the System.out
+ *  native program and writes it to the System.out
  * @author $Author: iolalla $
  * @version $Revision: 1.8 $
  */
