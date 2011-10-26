@@ -100,7 +100,7 @@
 	</developers>
 
 	<packaging>war</packaging>
-	<version>2.0.3</version>
+	<version>2.0.4-SNAPSHOT</version>
 	<properties> 
 		<slf4j.version>1.5.8</slf4j.version>	
 		<!-- This is just for "eclipse:eclipse" goal to always attempt downloading 
