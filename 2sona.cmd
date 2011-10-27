@@ -1,0 +1,6 @@
+rem https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+cd target
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=jcrontab-2.0.4.pom  -Dfile=jcrontab-2.0.4.war    -Dhttps.proxyHost=proxy.host -Dhttps.proxyPort=8080    -Dhttp.proxyHost=proxy.host -Dhttp.proxyPort=8080 -X -npu
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging  -DpomFile=jcrontab-2.0.4.pom  Dfile=jcrontab-2.0.4-sources.jar -Dclassifier=sources     -Dhttps.proxyHost=proxy.host -Dhttps.proxyPort=8080    -Dhttp.proxyHost=proxy.host -Dhttp.proxyPort=8080 -X -npu
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging  -DpomFile=jcrontab-2.0.4.pom  Dfile=jcrontab-2.0.4-javadoc.jar Dclassifier=javadoc    -Dhttps.proxyHost=proxy.host -Dhttps.proxyPort=8080    -Dhttp.proxyHost=proxy.host -Dhttp.proxyPort=8080 -X -npu
+ 
