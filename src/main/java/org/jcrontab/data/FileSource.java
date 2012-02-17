@@ -255,6 +255,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 	 *	This method saves the CrontabEntryBean array the actual problem with this
 	 *  method is that doesn�t store comments and blank lines from the original
 	 *  file any ideas?
+	 *  ^^^^^^^^ already store comments. FIXED.
 	 *  @param CrontabEntryBean bean this method stores the array of beans
 	 *  @throws CrontabEntryException when it can't parse the line correctly
 	 *  @throws IOException If it can't access correctly to the File
@@ -337,6 +338,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 	 * This method saves the CrontabEntryBean array the actual problem with this
 	 * method is that doesn�t store comments and blank lines from the original
 	 * file any ideas?
+	 * ^^^^^^^^ already store comments. FIXED.
 	 * 
 	 * @param CrontabEntryBean
 	 *            bean this method stores the array of beans
@@ -357,6 +359,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 	 *	This method saves the CrontabEntryBean the actual problem with this
 	 *  method is that doesn�t store comments and blank lines from the original
 	 *  file any ideas?
+	 *  ^^^^^^^^ already store comments. FIXED.
 	 *  @param CrontabEntryBean bean this method only lets store an entryBean
 	 *  each time.
 	 *  @throws CrontabEntryException when it can't parse the line correctly
