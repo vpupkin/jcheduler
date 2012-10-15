@@ -64,8 +64,7 @@ public class HoliDayFileSource implements HoliDaySource {
              
 			 String strLine;
 				
-				while((strLine = input.readLine()) != null){
-					//System.out.println(strLine);
+				while((strLine = input.readLine()) != null){ 
 					strLine = strLine.trim();
 					listOfLines.add(strLine);
 				}

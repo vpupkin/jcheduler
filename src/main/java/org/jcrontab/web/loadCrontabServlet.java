@@ -52,9 +52,9 @@ public class loadCrontabServlet extends HttpServlet {
 		super.init(config);
 		
 		try {
-			System.out.print("Working?...");
-            		process();
-			System.out.println("OK");
+			Log.info("Working?...");
+            process();
+            Log.info("OK");
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
@@ -73,8 +73,7 @@ public class loadCrontabServlet extends HttpServlet {
 
 		String propz = "jcrontab.properties";
 		//String path = getServletConfig().getServletContext()
-		//								.getRealPath(".");
-		//System.out.println("Real Path: " + path);
+		//								.getRealPath("."); 
 		String props = getServletConfig()
 				.getInitParameter("PROPERTIES_FILE");
 		if (props == null) {

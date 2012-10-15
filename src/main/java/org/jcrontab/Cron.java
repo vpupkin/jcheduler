@@ -173,7 +173,7 @@ startMEM +="                        .-\'`\'-.\r\n              ,-\'`\'.   \'._  
             CrontabBean nextEv = eventsQueue[counter];
             
             long intervalToSleep = nextEv.getTime() - System.currentTimeMillis();
-            // System.out.println("intervalToSleep :" + intervalToSleep);
+            Log.debug("intervalToSleep :" + intervalToSleep);
             if(intervalToSleep > 0) {
                 // Waits until the next event
                 try {

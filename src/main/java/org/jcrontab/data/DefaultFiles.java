@@ -68,8 +68,7 @@ public class DefaultFiles {
 	 *	@throws Exception
 	 */
 	public static void createPropertiesFile() throws Exception {
-		File propFile = new File(dir + FileSeparator + propertiesFile);
-		//System.out.println(" created : " + dir + FileSeparator + propertiesFile);
+		File propFile = new File(dir + FileSeparator + propertiesFile); 
 		propFile.createNewFile();
 		Class cla = DefaultFiles.class;
         BufferedReader input = new BufferedReader(
@@ -77,8 +76,7 @@ public class DefaultFiles {
 		BufferedWriter output = new BufferedWriter(new FileWriter(propFile));
 			String strLine;
 				
-			while((strLine = input.readLine()) != null){
-				//System.out.println(strLine);
+			while((strLine = input.readLine()) != null){ 
 				//strLine = strLine.trim();
 				if (strLine.indexOf("{$HOME}") != -1) {
 					StringBuffer strbLine = new StringBuffer(strLine);
@@ -88,8 +86,7 @@ public class DefaultFiles {
 											   home + "/" );
 					strLine = resultLine.toString();
                     if (strLine.indexOf("\\") != -1) {
-                        strLine = strLine.replace('\\','/');
-                        //System.out.println(strLine);
+                        strLine = strLine.replace('\\','/'); 
                     }
 				}
 				strLine+="\n";
@@ -109,8 +106,7 @@ public class DefaultFiles {
 		evFile.createNewFile();
 		BufferedWriter output = new BufferedWriter(new FileWriter(evFile));
 		output.write("#");
-		output.close();
-		//System.out.println(" created : " + dir + FileSeparator+ crontabFile);
+		output.close(); 
 	}
 	/**
 	 *	This method creates the default jcrontabDir 
@@ -118,8 +114,7 @@ public class DefaultFiles {
 	 */
 	public static void createJcrontabDir() {
 		File distDir = new File(dir);
-		distDir.mkdir();
-		//System.out.println(" created : " + dir );
+		distDir.mkdir(); 
 	}
 	
 	/**
@@ -130,8 +125,7 @@ public class DefaultFiles {
 	 *	@throws Exception
 	 */
 	public static void createLog4jFile() throws Exception {
-		File logFile = new File(dir + FileSeparator + log4jFile);
-		//System.out.println(" created : " + dir + FileSeparator + propertiesFile);
+		File logFile = new File(dir + FileSeparator + log4jFile); 
 		logFile.createNewFile();
 		Class cla = DefaultFiles.class;
         BufferedReader input = new BufferedReader(
@@ -139,8 +133,7 @@ public class DefaultFiles {
 		BufferedWriter output = new BufferedWriter(new FileWriter(logFile));
 			String strLine;
 				
-			while((strLine = input.readLine()) != null){
-				//System.out.println(strLine);
+			while((strLine = input.readLine()) != null){ 
 				strLine+="\n";
 				output.write(strLine);
 			}

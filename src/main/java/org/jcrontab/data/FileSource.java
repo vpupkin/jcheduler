@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 import org.jcrontab.Crontab;
+import org.jcrontab.log.Log;
 
 /**
  * This class Is the implementation of DataSource to access 
@@ -92,14 +93,13 @@ public class FileSource implements DataSource {
     public synchronized CrontabEntryBean find(final CrontabEntryBean ceb) 
     	throws CrontabEntryException, IOException, DataNotFoundException {
         final CrontabEntryBean[] cebra = findAll();
-        System.out.println("SEARCH----- #"+storeId+"#   ----:"+ceb);
+        Log.debug( "SEARCH----- #"+storeId+"#   ----:"+ceb);
 		for (int i = 0; i < cebra.length ; i++) {
 			CrontabEntryBean crontabEntryBean = cebra[i];
-			if (ceb!=null && ceb.equals(crontabEntryBean)) {
-//System.out.println("cebra encontrada : " + cebra[i]);
+			if (ceb!=null && ceb.equals(crontabEntryBean)) { 
 				return crontabEntryBean;
 			}else{
-				System.out.println("skiped:" +crontabEntryBean);
+				Log.debug( "skiped:" +crontabEntryBean);
 			}
 		}
 		throw new DataNotFoundException("Unable to find :" + ceb +"   {storedId=="+storeId+"}");
@@ -159,8 +159,7 @@ public class FileSource implements DataSource {
 						} else if ( lineTmp.trim().charAt(0) == '#') {
 							sb.append(lineTmp);
 							sb.append("\n");
-						} else {
-							//System.out.println(strLines); 
+						} else { 
 							CrontabEntryBean entry = cp.marshall(lineTmp);
 							entry.setHeader(sb);
 							sb =  new StringBuffer();
@@ -219,8 +218,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 		
 			String strLine;
 		
-			while ((strLine = input.readLine()) != null) {
-				//System.out.println(strLine);
+			while ((strLine = input.readLine()) != null) { 
 				strLine = strLine.trim();
 				listOfLines.add(strLine);
 			}
@@ -301,7 +299,7 @@ private synchronized Vector readAll(String filename) throws IOException {
 		File lockTmp = new File(fl.getParentFile(),".lock");	 
 		synchronized (FileSource.class) {
 			if (!lockTmp.exists()){
-				System.out.println("--------"+storeId+"--------------------");
+				Log.debug("--------"+storeId+"--------------------");
 				File fTmp = File.createTempFile("cron", "tab", fl.getParentFile());
 				FileOutputStream fileOutputStream = new FileOutputStream(fTmp );
 				PrintStream out = new PrintStream(fileOutputStream,true);
@@ -309,14 +307,13 @@ private synchronized Vector readAll(String filename) throws IOException {
 						if (bean==null)continue;
 						out.println(bean.getHeader());
 						String unmarshallTmp = cp.unmarshall(bean);
-						out.println(unmarshallTmp);
-						//System.out.println(unmarshallTmp);
+						out.println(unmarshallTmp); 
 				}
 				out.flush();
 				out.close();
 				fileOutputStream.flush();
 				fileOutputStream.close();
-				System.out.println("--------"+storeId+"--------------------");
+				Log.debug("--------"+storeId+"--------------------");
 
 				// old -> lock 
 				// new -> old

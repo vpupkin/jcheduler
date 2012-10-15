@@ -70,7 +70,7 @@ public class Log4JLogger implements Logger {
 				props.load( input );
 				PropertyConfigurator.configure( props );
 			} catch (Exception e) {
-				System.out.println("Unable to load :" +log4JProperties + e);
+				Log.error("Unable to load :" +log4JProperties , e);
 			}
 			
 	}

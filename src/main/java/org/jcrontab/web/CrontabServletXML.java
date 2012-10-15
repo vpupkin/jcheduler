@@ -229,8 +229,7 @@ public class CrontabServletXML extends HttpServlet {
 			sb.append(printFooter());
 
 			TransformerFactory tFactory = TransformerFactory.newInstance();
-			// To test xml can uncomment this line :-)
-			// System.out.println("\n\n\n" + sb.toString() + "\n\n\n" );
+			// To test xml can uncomment this line :-) 
 
 			Source xmlsource = new StreamSource(new StringReader(
 					(String) sb.toString()));
@@ -263,7 +262,7 @@ public class CrontabServletXML extends HttpServlet {
 			
 			out.flush();
 			out.close();
-			System.out.println(baos.toString());
+			Log.debug(baos.toString());
 		}
 	}
 
