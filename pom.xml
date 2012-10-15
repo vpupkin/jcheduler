@@ -302,11 +302,6 @@
 				
 	 	-->
 
-		<dependency>
-			<groupId>cc.co.llabor</groupId>
-			<artifactId>cachefs</artifactId>
-			<version>0.0.6</version>
-		</dependency>
 		<!-- 
 		<dependency>
 			<groupId>org.slf4j</groupId>
