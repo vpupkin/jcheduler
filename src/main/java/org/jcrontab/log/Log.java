@@ -40,18 +40,21 @@ public class Log {
 	 *	This method reports a info level message to the log
 	 */
 	public static void info(String message){
-		logger.info(message);
+		if (logger!=null)logger.info(message);
+		else System.out.println(message);
 	}
 	/**
 	 *	This method reports an Exception or Error  message to the log
 	 */
 	public static void error(String message, Throwable t){
-		logger.error(message, t);
+		if (logger!=null)logger.error(message, t);
+		else t.printStackTrace();
 	}
 	/**
 	 *	This method reports a debug level message to the log
 	 */
 	public static void debug(String message){
-		logger.debug(message);
+		if (logger!=null)logger.debug(message);
+		else System.err.println(message);
 	}
 }
