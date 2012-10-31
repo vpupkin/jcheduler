@@ -429,7 +429,7 @@
 		<dependency>
 			<groupId>cc.co.llabor</groupId>
 			<artifactId>cachefs</artifactId> 
-			<version>0.0.13</version>
+			<version>0.0.15</version>
 		</dependency>				
 		
 		<!-- logging -->
