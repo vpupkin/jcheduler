@@ -87,6 +87,7 @@ public class CrontabServletXML extends HttpServlet {
 				break;
 			}
 		}
+		show(request, response);
 	}
 
 	/**
@@ -115,7 +116,7 @@ public class CrontabServletXML extends HttpServlet {
 		if (request.getParameterValues("remove") == null) {
 			errors.add("Must select smth to delete");
 			request.setAttribute("error", errors);
-			show(request, response);
+			
 		} else {
 			String[] idToDelete = request.getParameterValues("delete" + "");
 			idToDelete = (String[])request.getParameterMap().get("remove");
@@ -134,7 +135,7 @@ public class CrontabServletXML extends HttpServlet {
 				request.setAttribute("error", errors);
 				Log.error(e.toString(), e);
 			}
-			show(request, response);
+			 
 		}
 	}
 	/**
@@ -181,11 +182,11 @@ public class CrontabServletXML extends HttpServlet {
 				Log.error(e.toString(), e);
 			}
 			request.setAttribute("error", errors);
-			show(request, response);
+			
 		} else {
 			errors.add("Must write some class name");
 			request.setAttribute("error", errors);
-			show(request, response);
+			
 		}
 	}
 	/**
