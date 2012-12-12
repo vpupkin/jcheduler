@@ -182,7 +182,7 @@ import org.jcrontab.log.Log;
 	 */ 
 	public String toString() {
 		final StringBuffer sb = new StringBuffer();
-                sb.append("\n [ Id: " + id  + " ]");
+                sb.append("[ Id: " + id  + " ]");
                 sb.append("\n [ ClassName: " + className  + " ]");
 		sb.append("\n [ MethodName : " + methodName  + " ]");
 		if (bextraInfo) {
@@ -191,8 +191,9 @@ import org.jcrontab.log.Log;
                             + " ]"); 
 			}
 		}
-       		sb.append("\n [ Calendar: " + cal  + " ]");
-                sb.append("\n [ TimeMillis: " + timeMillis + " ] ");
+		sb.append("\n [ lastExec: " + timeMillis + " ] ");
+		sb.append("\n [ executionResult: " + executionResult + " ] ");
+       	
 		sb.append("\n ");
 		return sb.toString();
 	}
@@ -241,14 +242,15 @@ import org.jcrontab.log.Log;
         }
         return ceb;
     }
-    long lastExecution = -1;
+    
 	public long getLastExecution() {
-		 	return lastExecution;
+		 	return timeMillis;
 	}
 	public void registerLastExecution(int taskId) {
-		CrontabRegistry.registerLastExecution(this,taskId);
-		lastExecution  = System.currentTimeMillis();
+		
+		timeMillis  = System.currentTimeMillis();
 		setLastResult(taskId);
+		CrontabRegistry.registerLastExecution(this,taskId);
 		Log.info( "execId:"+taskId+":"+this);
 	}
 	private int execCount=0;
@@ -266,6 +268,7 @@ import org.jcrontab.log.Log;
 	}
 	public void setExecutionResult(Object executionResult) {
 		this.executionResult = executionResult;
+		registerLastExecution(id);
 	}
 	public Throwable getError() { 
 			return error;

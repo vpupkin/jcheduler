@@ -30,17 +30,17 @@ public class CrontabRegistry {
 					colBean = (CrontabBean)collector.get(key);
 					if (colBean==null ){  // store itself into regisry
 						colBean = crontabBean;					
-					}else if ( crontabBean.equals(colBean)){
+					}else if ( !crontabBean.equals(colBean)){
 						//colBean.registerLastExecution(taskId);
-						colBean.setError(crontabBean.getError());
-						colBean.setResult(crontabBean.getExecutionResult());
+						Throwable error = crontabBean.getError();
+						colBean.setError(error);
+						Object executionResult = crontabBean.getExecutionResult();
+						colBean.setResult(executionResult);
 					}
 					
 				} else { // store itself into regisry
 					colBean = crontabBean;				
-				}
-				colBean.setLastResult(taskId);
-				
+				} 
 				collector.put(key, colBean);
 			}
 		}catch(Throwable e){/* ignore any statistics errors */
