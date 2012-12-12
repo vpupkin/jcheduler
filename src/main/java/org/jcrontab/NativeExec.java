@@ -115,6 +115,8 @@ public class NativeExec {
             System.out.println("ExitValue: " + exitVal);
             //System.exit(exitVal );
             throw new CronTask.ExitTrappedException(exitVal);
+        } catch (CronTask.ExitTrappedException t) {    
+        	 throw t;
         } catch (Throwable t) {
             Log.error(t.toString(), t);
           }
