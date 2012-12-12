@@ -295,4 +295,15 @@ import org.jcrontab.log.Log;
 		this.lastExecTaskId = this.id;
 		setExecutionResult (retval);
 	}
+	private static final void assertEquals(Object a, Object b){
+		if (a==null && b!=null) throw new RuntimeException("a!=b");
+		if (a!=null && b==null) throw new RuntimeException("a!=b");
+		if (!a.equals( b)) throw new RuntimeException("a!=b");
+	}
+	public void merge(CrontabBean crontabBean) {
+		assertEquals(this.className, crontabBean.className);
+		assertEquals(this.extraInfo, crontabBean.extraInfo);
+		this.execCount = Math.max(this.execCount, crontabBean.execCount) ;
+		this.executionResult = crontabBean.executionResult ;
+	}
 }

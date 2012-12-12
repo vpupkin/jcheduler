@@ -36,6 +36,9 @@ public class CrontabRegistry {
 						colBean.setError(error);
 						Object executionResult = crontabBean.getExecutionResult();
 						colBean.setResult(executionResult);
+					}else{
+						// TODO merge with old value
+						colBean.merge(crontabBean);	
 					}
 					
 				} else { // store itself into regisry
