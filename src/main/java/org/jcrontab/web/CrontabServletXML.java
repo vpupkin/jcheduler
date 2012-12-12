@@ -176,7 +176,7 @@ public class CrontabServletXML extends HttpServlet {
 				CrontabEntryBean cb = cbp.marshall(sb.toString());
 				CrontabEntryDAO instance = CrontabEntryDAO.getInstance();
 				instance.store(cb);
-				show(request, response);
+				
 			} catch (Exception e) {e.printStackTrace();
 				errors.add(e.toString());
 				Log.error(e.toString(), e);
