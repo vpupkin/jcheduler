@@ -89,7 +89,8 @@ public class CrontabRegistry {
 		String methodName = crontabBean.getMethodName();
 		String[] aExtraInfo = crontabBean.getExtraInfo();
 		String valTmp = calcVal(className, methodName, aExtraInfo);
-		return ""+valTmp .hashCode(); 
+		String retval = ""+valTmp .hashCode();
+		return retval; 
 	}
 
 	public static void registerLastExecutionError(CrontabBean bean, int taskId, Throwable e) {

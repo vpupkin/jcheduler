@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="org.jcrontab.web.CrontabServletXML"%>
 <%@page import="org.jcrontab.CrontabRegistry"%>
 <%@page import="org.jcrontab.CrontabBean"%>
@@ -89,7 +90,7 @@ for (int i = 0; listOfBeans!=null && i < listOfBeans.length; i++) {
     CrontabBean beanTmp = CrontabRegistry.getBean(crontabEntryBean);
 	if (beanTmp!=null){
  %>		
-<TD width="1"><%=beanTmp.getLastExecution()%></TD>
+<TD width="1"><%=new Date( beanTmp.getLastExecution() )%></TD>
 <TD width="1"><%=beanTmp.getExecutionResult()%></TD>
 <TD width="1"><%=beanTmp.getLastResult()%></TD>
 <TD width="1"><%=beanTmp.getExecCount()%></TD> 

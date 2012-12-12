@@ -302,8 +302,12 @@ import org.jcrontab.log.Log;
 	}
 	public void merge(CrontabBean crontabBean) {
 		assertEquals(this.className, crontabBean.className);
-		assertEquals(this.extraInfo, crontabBean.extraInfo);
-		this.execCount = Math.max(this.execCount, crontabBean.execCount) ;
+		//assertEquals(this.extraInfo, crontabBean.extraInfo);
+		// TODO - it is too buggy calculation
+		this.execCount = Math.max(this.execCount, crontabBean.execCount);
+		this.execCount ++;
 		this.executionResult = crontabBean.executionResult ;
+		this.lastExecTaskId = crontabBean.lastExecTaskId;
+		this.timeMillis =   Math.max(this.timeMillis, crontabBean.timeMillis);
 	}
 }
