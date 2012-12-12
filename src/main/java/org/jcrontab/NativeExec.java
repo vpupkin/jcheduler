@@ -113,7 +113,8 @@ public class NativeExec {
             int exitVal = proc.waitFor();
             
             System.out.println("ExitValue: " + exitVal);
-            System.exit(exitVal );
+            //System.exit(exitVal );
+            throw new CronTask.ExitTrappedException(exitVal);
         } catch (Throwable t) {
             Log.error(t.toString(), t);
           }
