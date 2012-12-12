@@ -111,7 +111,9 @@ public class NativeExec {
                                     
             // any error???
             int exitVal = proc.waitFor();
-            System.out.println("ExitValue: " + exitVal);        
+            
+            System.out.println("ExitValue: " + exitVal);
+            System.exit(exitVal );
         } catch (Throwable t) {
             Log.error(t.toString(), t);
           }

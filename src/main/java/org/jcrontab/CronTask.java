@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.security.acl.Permission;
 import java.util.Arrays; 
 import javax.naming.InitialContext; 
 
@@ -138,6 +139,8 @@ public class CronTask
      * This method decides wich method call in  the given class
      */
     public void runTask() {
+    	forbidSystemExitCall();
+    	
     	Object retval = null;
         try {
             // Do class instantiation first (common to all cases of 'if' below)
@@ -218,6 +221,8 @@ public class CronTask
                     Log.error(e.toString(), e);
                 }
             }
+        } catch (ExitTrappedException e) {
+        	e.printStackTrace();
         } catch (Exception e) {
         	retval   = e;
         	if (bean.methodName != null && bean.methodName.length() > 0) {
@@ -225,13 +230,16 @@ public class CronTask
             } else { 
                 Log.error("Unable to instantiate class: " + bean.className, e) ; 
             }        		
-        }
+        }	
         Log.debug(""+retval);
         if (retval instanceof Throwable){
         	bean.setError( (Throwable)retval);
         }else{
         	bean.setResult ( retval);
         }
+        
+        enableSystemExitCall();
+        
     }
  
 	/**
@@ -273,5 +281,25 @@ public class CronTask
 		    System.setOut(pstream);
 		}
 		return tempFile;
+	}
+	
+	
+	private static class ExitTrappedException extends SecurityException { }
+	private static  SecurityManager smBak;
+	private static void forbidSystemExitCall() {
+	  final SecurityManager securityManager = new SecurityManager() {
+	    public void checkPermission( java.security.Permission permission ) {
+	      if( "exitVM".equals( permission.getName() ) ) {
+	        throw new ExitTrappedException() ;
+	      }
+	    }
+	  } ;
+	  smBak = System.getSecurityManager( ) ;
+	  System.setSecurityManager( securityManager ) ;
+	}
+
+	private static void enableSystemExitCall() {
+	  System.setSecurityManager( null ) ;
+	  System.setSecurityManager( smBak ) ;
 	}
 }
