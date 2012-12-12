@@ -246,6 +246,7 @@ public class CronTask
      * Runs this task
      */
     public final void run() {
+    	forbidSystemExitCall();
         File tempFile = null;
 
         try { 
@@ -261,6 +262,8 @@ public class CronTask
         	CrontabRegistry.registerLastExecutionError(this.bean, identifier, e);
             Log.error("ERROR@TaskID:"+identifier+":="+e.toString(), e);
         }
+        
+        enableSystemExitCall();
     }
 	private void postMail(File tempFile) throws Exception {
 		//This line sends the email to the config
