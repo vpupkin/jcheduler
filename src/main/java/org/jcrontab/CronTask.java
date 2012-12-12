@@ -260,7 +260,7 @@ public class CronTask
             // Deletes the task from the crontab array
             crontab.getInstance().deleteTask(identifier);            
             // Report success execution
-            CrontabRegistry.registerLastExecution(this.bean, identifier);
+            CrontabRegistry.registerLastExecution(this.bean );
             postMail(tempFile);
         } catch (Throwable e) {
         	CrontabRegistry.registerLastExecutionError(this.bean, identifier, e);

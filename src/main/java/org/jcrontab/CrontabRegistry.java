@@ -19,7 +19,7 @@ import cc.co.llabor.cache.Manager;
 public class CrontabRegistry {
 	
 
-	public static void registerLastExecution(CrontabBean crontabBean, int taskId) {
+	public static void registerLastExecution(CrontabBean crontabBean ) {
 		// TODO ID could be inconsistent - refactor it!
 		String key = calcKey(crontabBean);
 		CrontabBean colBean = null;
@@ -91,7 +91,7 @@ public class CrontabRegistry {
 
 	public static void registerLastExecutionError(CrontabBean bean, int taskId, Throwable e) {
 		bean.addError(e);
-		registerLastExecution(bean, - taskId);
+		registerLastExecution(bean);
 	}
 
 }

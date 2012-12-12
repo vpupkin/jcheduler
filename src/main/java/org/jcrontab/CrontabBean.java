@@ -246,11 +246,9 @@ import org.jcrontab.log.Log;
 	public long getLastExecution() {
 		 	return timeMillis;
 	}
-	public void registerLastExecution(int taskId) {
-		
+	public void registerLastExecution(int taskId) { 
 		timeMillis  = System.currentTimeMillis();
-		setLastResult(taskId);
-		CrontabRegistry.registerLastExecution(this,taskId);
+		setLastExecTaskId(taskId); 
 		Log.info( "execId:"+taskId+":"+this);
 	}
 	private int execCount=0;
@@ -259,35 +257,42 @@ import org.jcrontab.log.Log;
 		 
 	}
 	
-	// 0  - not user, positiv - succes with taskId, negative - error with taskId
-	private long lastResult = 0;
+	// 0  - not used, positive - success with taskId, negative - error with taskId
+	private long lastExecTaskId = 0;
 	private Throwable error;
 	private Object executionResult;
 	public Object getExecutionResult() { 
 			return executionResult;
 	}
 	public void setExecutionResult(Object executionResult) {
-		this.executionResult = executionResult;
-		registerLastExecution(id);
+		this.executionResult = executionResult;		
+		CrontabRegistry.registerLastExecution(this );
 	}
 	public Throwable getError() { 
 			return error;
 	}
 	public void setError(Throwable error) {
+		this.lastExecTaskId = -this.id;
 		this.error = error;
 	}
 	public long getLastResult() {
-		 return lastResult;
+		 
+		 long retval = lastExecTaskId;
+		 try{
+			 retval = ((Number)executionResult).longValue();
+		 }catch(Throwable e){}
+		return  retval ;
 		 
 	}
-	public void setLastResult(int taskId) {
+	public void setLastExecTaskId(int taskId) {
 		execCount++;
-		lastResult = taskId;
+		lastExecTaskId = taskId;
 	}
 	public void addError(Throwable e) {
 		setError( e );
 	}
 	public void setResult(Object retval) {
+		this.lastExecTaskId = this.id;
 		setExecutionResult (retval);
 	}
 }
