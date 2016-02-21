@@ -7,11 +7,12 @@
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
-		<version>5</version>
+		<version>5</version>war
 	</parent>
 	<packaging>war</packaging>
 	<version>2.0.6-SNAPSHOT</version>
 	<properties> 
+		<tomcat-jasper.version>7.0.30</tomcat-jasper.version>
 		<slf4j.version>1.5.8</slf4j.version>	
 		<!-- This is just for "eclipse:eclipse" goal to always attempt downloading 
 			sources -->
@@ -170,6 +171,7 @@
 								<dependency>
 									<groupId>org.apache.tomcat</groupId>
 									<artifactId>tomcat-jasper</artifactId>
+									<tomcat-jasper.version>${tomcat-jasper.version}</tomcat-jasper.version>
 								</dependency>
 		
 								<dependency>
