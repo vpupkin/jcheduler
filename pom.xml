@@ -237,18 +237,20 @@
 			<url>dav:https://z-os.googlecode.com/svn/release-repository</url>
 		</repository>		
 	</distributionManagement>
-	<scm>
 
+	<!-- If you have access to scm then you can place actual url's. Otherwise 
+		with <revisionOnScmFailure /> you can give some fake URLs as follows. -->
+	<scm>
+		<!-- <connection>scm:hg:${scm.base}/${pom.artifactId}</connection> -->
 		<connection>
-			sscm:hg:https://code.google.com/p/jcheduler/
-		</connection>
+scm:git:git://github.com/vpupkin/jcheduler.git
+</connection>
 		<developerConnection>
-			scm:hg:https://code.google.com/p/jcheduler/
+scm:git:git://github.com/vpupkin/jcheduler.git
 		</developerConnection>
-		<url>
-			sscm:hg:https://code.google.com/p/jcheduler/
-		</url>
+		<url>${l.base}/JSPWiki/Wiki.jsp?page=${pom.artifactId}</url>
 	</scm>
+ 
 	<!-- AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: <repositories></repositories> 
 		<pluginRepositories></pluginRepositories> -->
 
