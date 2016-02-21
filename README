@@ -3,8 +3,20 @@
 
 
 JScheduler is Java-Web-Appliocation which utilize  Jcrontab-Library for same purposes as 
-			Jcrontab. The root of documentation is below...
+			Jcrontab. Original Jcrontab-Jar-using-way is keeped. 
+			
+			The root of documentation is below...
 
+Prerequsites
+	
+	git, maven, tomcat, java
+	
+Installation (shortest way)
+
+	##>git clone https://github.com/vpupkin/jcheduler.git
+	##>cd  jcheduler
+	##>mvn -o -X  help:active-profiles tomcat:redeploy -Dcccache -DTOMCAT6 -DLOCAL8080 -Dmaven.test.skip=true
+	
 
 
 			Jcrontab README File
